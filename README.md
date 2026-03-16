@@ -89,6 +89,13 @@ equal := cryptoutil.ConstantTimeEqual(a, b)
 | `HMACVerify(secret, payload []byte, signature string) bool` | Verify HMAC signature |
 | `ConstantTimeEqual(a, b string) bool` | Constant-time string comparison |
 
+## Development
+
+```bash
+go test ./...
+go vet ./...
+```
+
 ## License
 
 MIT
