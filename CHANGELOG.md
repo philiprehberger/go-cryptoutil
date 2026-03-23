@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0
+
+- Add key derivation: `DeriveKey` with 600,000 HMAC-SHA256 iterations, `GenerateSalt`
+- Add hashing: `SHA256`, `SHA512` returning hex strings
+- Add digital signatures: `GenerateKeyPair`, `Sign`, `Verify` using Ed25519
+
 ## 0.1.3
 
 - Consolidate README badges onto single line, fix CHANGELOG format

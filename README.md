@@ -68,6 +68,40 @@ valid := cryptoutil.HMACVerify(secret, payload, signature)
 equal := cryptoutil.ConstantTimeEqual(a, b)
 ```
 
+### Key Derivation
+
+```go
+// Generate a random salt
+salt, err := cryptoutil.GenerateSalt(16)
+
+// Derive a 32-byte key from a password and salt
+// Uses 600,000 iterations of HMAC-SHA256 (OWASP recommended)
+key := cryptoutil.DeriveKey([]byte("my-password"), salt, 32)
+```
+
+### Hashing
+
+```go
+// Compute SHA-256 hash (returns 64-character hex string)
+hash256 := cryptoutil.SHA256([]byte("hello"))
+
+// Compute SHA-512 hash (returns 128-character hex string)
+hash512 := cryptoutil.SHA512([]byte("hello"))
+```
+
+### Digital Signatures (Ed25519)
+
+```go
+// Generate an Ed25519 key pair
+pub, priv, err := cryptoutil.GenerateKeyPair()
+
+// Sign data
+sig := cryptoutil.Sign(priv, []byte("message to sign"))
+
+// Verify signature
+valid := cryptoutil.Verify(pub, []byte("message to sign"), sig)
+```
+
 ## API
 
 | Function | Description |
@@ -86,6 +120,13 @@ equal := cryptoutil.ConstantTimeEqual(a, b)
 | `HMACSign(secret, payload []byte) string` | HMAC-SHA256 sign, return hex |
 | `HMACVerify(secret, payload []byte, signature string) bool` | Verify HMAC signature |
 | `ConstantTimeEqual(a, b string) bool` | Constant-time string comparison |
+| `DeriveKey(password, salt []byte, keyLen int) []byte` | Derive key using iterated HMAC-SHA256 |
+| `GenerateSalt(n int) ([]byte, error)` | Generate n bytes of random salt |
+| `SHA256(data []byte) string` | SHA-256 hash, return hex string |
+| `SHA512(data []byte) string` | SHA-512 hash, return hex string |
+| `GenerateKeyPair() (ed25519.PublicKey, ed25519.PrivateKey, error)` | Generate Ed25519 key pair |
+| `Sign(privateKey ed25519.PrivateKey, data []byte) []byte` | Ed25519 sign |
+| `Verify(publicKey ed25519.PublicKey, data, sig []byte) bool` | Ed25519 verify |
 
 ## Development
 
